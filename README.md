@@ -57,3 +57,7 @@ Highscores cleared using "Clear Highscores" buttton
 *       https://www.youtube.com/watch?v=f4fB9Xg2JEY
 *       https://www.youtube.com/watch?v=LQGTb112N_c
 *       https://www.youtube.com/watch?v=4piMZDO5IOI
+
+# License
+
+Public - MIT License
