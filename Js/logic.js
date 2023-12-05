@@ -21,11 +21,14 @@ function quizStart() {
     clockTick,
     1000
   );
-
   timerE1.textContent = time;
-  let startScreenEl = document.querySelector('#startScreen');
+
+  let startScreenEl = document.querySelector('#start-screen');
   startScreenE1.setAttributes("class", "hide");
   questionsEl.removeAttribute("class");
 
   getQuestions();
 }
+
+
+startBtn.onclick = quizStart;
