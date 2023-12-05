@@ -9,3 +9,8 @@ let nameEl = document.querySelector('#name');
 let feedbackEl = document.querySelector('#feedback');
 let gobackEl = document.querySelector('#goback');
 
+// The Initial State
+let currentQuestionIndex = 0;
+let time = questions.length * 15;
+let timerId;
+
