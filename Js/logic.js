@@ -1,85 +1,136 @@
-// DOM elements
+// DOM Elements
+var questionsEl = document.querySelector("#questions");
+var timerEl = document.querySelector("#time");
+var choicesEl = document.querySelector("#choices");
+var submitBtn = document.querySelector("#submit");
+var startBtn = document.querySelector("#start");
+var initialsEl = document.querySelector("#initials");
+var feedbackEl = document.querySelector("#feedback");
 
-let questionsEl = document.querySelector('#questions');
-let timerEl = document.querySelector('#timer');
-let choicesEl = document.querySelector('#options');
-let submitBtnEl = document.querySelector('#submit');
-let startBtnEl = document.querySelector('#start');
-let nameEl = document.querySelector('#name');
-let feedbackEl = document.querySelector('#feedback');
-let gobackEl = document.querySelector('#goback');
+// Initial Setup
+var currentQuestionIndex = 0;
+var time = questions.length * 15;
+var timerId;
+var right = "./sfx/correct.mp3";
+var wrong = "./sfx/incorrect.mp3";
 
-// The Initial State
-let currentQuestionIndex = 0;
-let time = questions.length * 15;
-let timerId;
 
-// Starting the quiz and hiding the initial page
-
-function quizStart() { 
-  timerID = setInterval(
-    clockTick,
-    1000
-  );
-  timerE1.textContent = time;
-
-  let startScreenEl = document.querySelector('#start-screen');
-  startScreenEl.setAttributes("class", "hide");
+// Start function
+function start() {
+  var startScreenEl = document.getElementById("start-screen");
+  startScreenEl.setAttribute("class", "hide");
   questionsEl.removeAttribute("class");
+  timerId = setInterval(clock, 1000);
+  timerEl.textContent = time;
 
-  getQuestions();
+  getQ();
 }
 
-// Retrieve questions from the Object
+function getQ() {
+  var currentQuestion = questions[currentQuestionIndex];
 
-function getQuestions() { 
-  let currentQuestion = questions[currentQuestionIndex];
-  let promptEl = document.getElementById('#question-title');
-
-  promptEl.textContent = currentQuestion.prompt;
+  //question title
+  var titleEl = document.getElementById("question-title");
+  titleEl.textContent = currentQuestion.title;
   choicesEl.innerHTML = "";
-  currentQuestionIndex.options.forEach(
-    function (choice, i) {
-      let choiceBtn = document.createElementById("button");
 
-      choiceBtn.setAttribute("value", choice);
-      choiceBtn.textContent = i + 1 + ". " + choice;
-      choiceBtn.onclick = questionClick;
-      choicesEl.appendChild(choiceBtn);
-    }
-  );  
+  currentQuestion.choices.forEach(function(choice, i) {
+    var choiceNode = document.createElement("button");
+    choiceNode.setAttribute("class", "choice");
+    choiceNode.setAttribute("value", choice);
+
+    choiceNode.textContent = i + 1 + ". " + choice;
+    choiceNode.onclick = clickQ;
+    choicesEl.appendChild(choiceNode);
+  });
 }
 
-//Right or Wrong Answers function
+function clock() {
+  time--;
+  timerEl.textContent = time;
 
-function questionClick() { 
-  if (this.value !== questions[currentQuestionIndex].answer) { 
-    time -= 5;
-    if (time < 0) { 
-        time = 0; 
-      } 
-      timerEl.textContent = time; 
-      feedbackEl.textContent = `Wrong! The correct answer was  
-      ${questions[currentQuestionIndex].answer}.`; 
-      feedbackEl.style.color = "red"; 
-  } else { 
-      feedbackEl.textContent = "Correct!"; 
-      feedbackEl.style.color = "green"; 
-  } 
-  feedbackEl.setAttribute( 
-      "class", 
-      "feedback"
-  ); 
-  setTimeout(function () { 
-      feedbackEl.setAttribute( 
-          "class", "feedback hide"); 
-  }, 2000); 
-  currentQuestionIndex++; 
-  if (currentQuestionIndex === questions.length) { 
-      quizEnd(); 
-  } else { 
-      getQuestion(); 
-  } 
-} 
+  if (time <= 0) {
+    end();
+  }
+}
 
-startBtn.onclick = quizStart;
+function clickQ() {
+  if (this.value !== questions[currentQuestionIndex].answer) {
+    time -= 10;
+    if (time < 0) {
+      time = 0;
+    }
+
+    timerEl.textContent = time;
+    feedbackEl.textContent = "Wrong!";
+    feedbackEl.style.color = "red";
+    feedbackEl.style.fontSize = "150%";
+    (new Audio(wrong)).play()
+  } else {
+    feedbackEl.textContent = "Correct!";
+    feedbackEl.style.color = "green";
+    feedbackEl.style.fontSize = "150%";
+    (new Audio(right)).play()
+  }
+
+  //right/wrong feedback
+  feedbackEl.setAttribute("class", "feedback");
+  setTimeout(function() {
+    feedbackEl.setAttribute("class", "feedback hide");
+  }, 1000);
+
+  //next question
+  currentQuestionIndex++;
+
+  if (currentQuestionIndex === questions.length) {
+    end();
+  } else {
+    getQ();
+  }
+}
+
+function end() {
+  clearInterval(timerId);
+
+  var endScreenEl = document.getElementById("end-screen");
+  endScreenEl.removeAttribute("class");
+
+  var finalScoreEl = document.getElementById("final-score");
+  finalScoreEl.textContent = time;
+
+  questionsEl.setAttribute("class", "hide");
+}
+
+function savehighscore() {
+  //get value of input box
+  var initials = initialsEl.value.trim();
+
+  if (initials !== "") {
+    //get saved scores from localstorage
+    var highscores =
+      JSON.parse(window.localStorage.getItem("highscores")) || [];
+
+    //new score for current user
+    var newScore = {
+      score: time,
+      initials: initials
+    };
+
+    //save to localstorage
+    highscores.push(newScore);
+    window.localStorage.setItem("highscores", JSON.stringify(highscores));
+
+    //redirect to highscores page
+    window.location.href = "highscores.html";
+  }
+}
+
+function checkenter(event) {
+  if (event.key === "Enter") {
+    savehighscore();
+  }
+}
+
+submitBtn.onclick = savehighscore;
+startBtn.onclick = start;
+initialsEl.onkeyup = checkenter;
