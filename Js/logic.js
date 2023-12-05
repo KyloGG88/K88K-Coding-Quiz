@@ -14,3 +14,18 @@ let currentQuestionIndex = 0;
 let time = questions.length * 15;
 let timerId;
 
+// Starting the  quiz and hiding the initial page
+
+function quizStart() { 
+  timerID = setInterval(
+    clockTick,
+    1000
+  );
+
+  timerE1.textContent = time;
+  let startScreenEl = document.querySelector('#startScreen');
+  startScreenE1.setAttributes("class", "hide");
+  questionsEl.removeAttribute("class");
+
+  getQuestions();
+}
