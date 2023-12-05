@@ -24,11 +24,19 @@ function quizStart() {
   timerE1.textContent = time;
 
   let startScreenEl = document.querySelector('#start-screen');
-  startScreenE1.setAttributes("class", "hide");
+  startScreenEl.setAttributes("class", "hide");
   questionsEl.removeAttribute("class");
 
   getQuestions();
 }
 
+function getQuestions() { 
+  let currentQuestion = questions[currentQuestionIndex];
+  let promptEl = document.getElementById('#question-title');
+
+  promptEl.textContent = currentQuestion.prompt;
+  choicesEl.innerHTML = "";
+  
+}
 
 startBtn.onclick = quizStart;
