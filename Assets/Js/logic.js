@@ -11,8 +11,8 @@ var feedbackEl = document.querySelector("#feedback");
 var currentQuestionIndex = 0;
 var time = questions.length * 10;
 var timerId;
-var right = "./sfx/correct.mp3";
-var wrong = "./sfx/incorrect.mp3";
+var right = "Assets/sfx/correct.mp3";
+var wrong = "Assets/sfx/incorrect.mp3";
 
 
 // Start function
