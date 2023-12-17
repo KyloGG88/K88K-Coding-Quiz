@@ -26,25 +26,25 @@ GitPages link: [K88K-Coding-Quiz](https://kylogg88.github.io/K88K-Coding-Quiz/)
 
 Here are screenshots of my work:
 
-Start of Quiz
+* Start of Quiz
 ![](images/Start.jpg)
 
-Clicking the start button begins quiz       
+* Clicking the start button begins quiz       
 ![](images/Question.jpg)
 
-"Correct" feedback 
+* "Correct" feedback 
 ![](images/Right.jpg)
 
-"Wrong" feedback 
+* "Wrong" feedback 
 ![](images/Wrong.jpg)
 
-End of Quiz, Time is saved as Highscore & Request for Initials
+* End of Quiz, Time is saved as Highscore & Request for Initials
 ![](images/End.jpg)
 
-Score saved to Highscores
+* Score saved to Highscores
 ![](images/Highscores.jpg)
 
-Highscores cleared using "Clear Highscores" buttton
+* Highscores cleared using "Clear Highscores" button
 ![](images/Highscores_cleared.jpg)
 
 # Resources
@@ -61,3 +61,17 @@ Highscores cleared using "Clear Highscores" buttton
 # License
 
 Public - MIT License
+
+# Error Update - 17 December 2023
+
+* I did not following proper folder creation to ensure my project loaded all files correctly, this has been updated.
+* Ensure to create an *assets folder* with corresponding CSS and JavaScript folders.
+
+* New Folder Structure
+![](images/Folder-path-corrections.jpg)
+
+* CSS path
+![](images/css-path.jpg)
+
+* JavaScript path
+![](images/javascript-path.jpg)
