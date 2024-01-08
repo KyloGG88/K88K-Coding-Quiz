@@ -64,7 +64,7 @@ Public - MIT License
 
 # Error Update - 17 December 2023
 
-* I did not following proper folder creation to ensure my project loaded all files correctly, this has been updated.
+* I did not follow proper folder structure to ensure my project loaded all files correctly, this has been updated.
 * Ensure to create an *assets folder* with corresponding CSS and JavaScript folders.
 
 * New Folder Structure
